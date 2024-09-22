@@ -82,6 +82,13 @@ const playGame = () => {
   for (let i = 1; i <= 5; i++) {
     playARound(getHumanChoice(), getComputerChoice());
   }
+  if(humanScore > computerScore) {
+    return `You won!`;
+  } else if(computerScore > humanScore) {
+    return `Computer won!`;
+  } else {
+    return `It's a tie.`
+  }
   return `Your score is ${humanScore} and computer's score is ${computerScore}`;
 };
 
