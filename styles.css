@@ -103,4 +103,12 @@ img {
   .winner {
     text-align: center;
   }
+
+  h1 {
+    height: 15%;
+  }
+
+  .buttons {
+    height: 50%;
+  }
 }
