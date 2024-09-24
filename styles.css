@@ -30,7 +30,7 @@ h1 {
 .result {
   height: 25%;
   width: 100%;
-  background-color: white;
+  color: white;
 }
 
 .result .scores {
@@ -51,6 +51,8 @@ h1 {
   align-items: center;
   font-size: 2rem;
   font-family: roboto;
+  font-weight: 700;
+  text-align: center;
 }
 
 /* Buttons */
