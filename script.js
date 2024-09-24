@@ -1,110 +1,107 @@
-"use strict";
+// Getting buttons and displays
+const rockIcon = document.getElementById("rock");
+const paperIcon = document.getElementById("paper");
+const scissorsIcon = document.getElementById("scissors");
+const myScoreText = document.querySelector(".human-score");
+const computerScoreText = document.querySelector(".computer-score");
+const winnerText = document.querySelector(".winner");
 
-// getting Computer choice
+// Getting human Choice.
+const getHumanChoice = (callback) => {
+  rockIcon.addEventListener("click", () => {
+    callback("rock");
+  });
+
+  paperIcon.addEventListener("click", () => {
+    callback("paper");
+  });
+
+  scissorsIcon.addEventListener("click", () => {
+    callback("scissors");
+  });
+};
+
+const humanChose = (choice) => {
+  return choice;
+};
+
+// getHumanChoice(humanChose);
+
+// Getting computer Choice.
 const getComputerChoice = () => {
-  const numbers = [1, 2, 3];
-  let computerChoice;
+  const computerChoice = Math.floor(Math.random() * 3);
 
-  const randomChoice = Math.floor(Math.random() * numbers.length);
-
-  if (randomChoice === 1) {
-    computerChoice = "rock";
-    return computerChoice.toLowerCase();
-  } else if (randomChoice === 2) {
-    computerChoice = "paper";
-    return computerChoice.toLowerCase();
+  if (computerChoice === 1) {
+    return "rock";
+  } else if (computerChoice === 2) {
+    return "paper";
   } else {
-    computerChoice = "scissors";
-    return computerChoice.toLowerCase();
+    return "scissors";
   }
 };
+console.log(getComputerChoice());
 
-// Getting human choice
-const getHumanChoice = () => {
-  const humanChoice = prompt("Enter your choice: rock, paper or scissors:");
-  if (humanChoice === "") {
-    return getHumanChoice();
-  } else if (
-    humanChoice !== "rock" &&
-    humanChoice !== "paper" &&
-    humanChoice !== "scissors"
-  ) {
-    alert(`Please enter a valid choice`);
-    return getHumanChoice();
-  }
-  return humanChoice.toLowerCase();
-};
-
-// console.log(getHumanChoice());
-
-// console.log(playARound(getHumanChoice(), getComputerChoice()));
-// Play the game for 5 rounds.
-const playGame = () => {
-  for (let i = 1; i <= 5; i++) {
-    playARound(getHumanChoice(), getComputerChoice());
-  }
-  if (humanScore > computerScore) {
-    return `You won!`;
-  } else if (computerScore > humanScore) {
-    return `Computer won!`;
-  } else {
-    return `It's a tie.`;
-  }
-  return `Your score is ${humanScore} and computer's score is ${computerScore}`;
-};
-
-// console.log(playGame());
+// Playing game for 5 rounds.
+let computerscore = 0;
 let humanScore = 0;
-let computerScore = 0;
-const result = [];
-const playARound = (humanChoice, computerChoice) => {
-  if (humanChoice === computerChoice) {
-    console.log(
-      `It's a tie. You chose ${humanChoice} and the computer chose ${computerChoice}`
-    );
-  }
-  switch (humanChoice) {
-    case "rock":
-      if (computerChoice === "scissors") {
-        humanScore += 1;
-        console.log(
-          `You won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      } else if (computerChoice === "paper") {
-        computerScore += 1;
-        console.log(
-          `Computer won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      }
-      break;
+const playGame = () => {
+  const playARound = (humanChoice, computerChoice) => {
+    myScoreText.textContent = `Your score is: ${humanScore}`;
+    computerScoreText.textContent = `Computer's score is: ${computerscore}`;
+    if (humanChoice === computerChoice) {
+      winnerText.textContent = `It's a tie. You chose ${humanChoice} and computer chose ${computerChoice}`;
+    }
+    switch (humanChoice) {
+      case "rock":
+        if (computerChoice === "scissors") {
+          humanScore++;
+          myScoreText.textContent = `Your score is: ${humanScore}`;
+          winnerText.textContent = `You won. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        } else if (computerChoice === "paper") {
+          computerscore++;
+          computerScoreText.textContent = `Computer's score is:${computerscore}`;
+          winnerText.textContent = `You lost. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        }
+        break;
 
-    case "paper":
-      if (computerChoice === "rock") {
-        humanScore += 1;
-        console.log(
-          `You won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      } else if (computerChoice === "scissors") {
-        computerScore += 1;
-        console.log(
-          `Computer won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      }
-      break;
-    case "scissors":
-      if (computerChoice === "paper") {
-        humanScore += 1;
-        console.log(
-          `You won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      } else if (computerChoice === "rock") {
-        computerScore += 1;
-        console.log(
-          `Computer won, You chose ${humanChoice} and computer chose ${computerChoice}`
-        );
-      }
-      break;
-  }
+      case "paper":
+        if (computerChoice === "rock") {
+          humanScore++;
+          myScoreText.textContent = `Your score is: ${humanScore}`;
+          winnerText.textContent = `You won. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        } else if (computerChoice === "scissors") {
+          computerscore++;
+          computerScoreText.textContent = `Computer's score is:${computerscore}`;
+          winnerText.textContent = `You lost. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        }
+        break;
+      case "scissors":
+        if (computerChoice === "paper") {
+          humanScore++;
+          myScoreText.textContent = `Your score is: ${humanScore}`;
+          winnerText.textContent = `You won. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        } else if (computerChoice === "rock") {
+          computerscore++;
+          computerScoreText.textContent = `Computer's score is:${computerscore}`;
+          winnerText.textContent = `You lost. You chose ${humanChoice} and computer chose ${computerChoice}`;
+        }
+        break;
+    }
+  };
+  getHumanChoice((humanchoice) => {
+    const computerchoice = getComputerChoice();
+    playARound(humanchoice, computerchoice);
+
+    if (humanScore === 5) {
+      winnerText.textContent = "You won";
+      humanScore = 0;
+      computerscore = 0;
+    } else if (computerscore === 5) {
+      winnerText.textContent = "Computer won";
+      humanScore = 0;
+      computerscore = 0;
+    }
+  });
 };
 
-playARound(getComputerChoice(), getHumanChoice());
+playGame();
